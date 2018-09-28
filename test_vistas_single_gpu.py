@@ -18,12 +18,12 @@ from modules.bn import InPlaceABN
 from modules.deeplab import DeeplabV3
 
 parser = argparse.ArgumentParser(description="Testing script for the Vistas segmentation model")
-parser.add_argument("--scales", metavar="LIST", type=str, default="[0.7, 1, 1.2]", help="List of scales")
+parser.add_argument("--scales", metavar="LIST", type=str, default="[1]", help="List of scales")
 parser.add_argument("--flip", action="store_true", help="Use horizontal flipping")
 parser.add_argument("--fusion-mode", metavar="NAME", type=str, choices=["mean", "voting", "max"], default="mean",
                     help="How to fuse the outputs. Options: 'mean', 'voting', 'max'")
 parser.add_argument("--output-mode", metavar="NAME", type=str, choices=["palette", "raw", "prob"],
-                    default="final",
+                    default="raw",
                     help="How the output files are formatted."
                          " -- palette: color coded predictions"
                          " -- raw: gray-scale predictions"
@@ -190,7 +190,7 @@ def main():
                 prob = prob.cpu()
                 pred = pred.cpu()
                 pred_img = get_pred_image(pred, out_size, args.output_mode == "palette")
-                pred_img.save(path.join(args.output, img_name + ".png"))
+                pred_img.save(path.join(args.output, img_name + "_labels.png"))
 
                 # Optionally save probabilities
                 if args.output_mode == "prob":

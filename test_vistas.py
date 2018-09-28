@@ -4,7 +4,7 @@ import subprocess
 import argparse
 
 parser = argparse.ArgumentParser(description="Testing script for the Vistas segmentation model")
-parser.add_argument("--scales", metavar="LIST", type=str, default="[0.7, 1, 1.2]", help="List of scales")
+parser.add_argument("--scales", metavar="LIST", type=str, default="[1]", help="List of scales")
 parser.add_argument("--flip", action="store_true", help="Use horizontal flipping")
 parser.add_argument("--fusion-mode", metavar="NAME", type=str, choices=["mean", "voting", "max"], default="mean",
                     help="How to fuse the outputs. Options: 'mean', 'voting', 'max'")
@@ -52,7 +52,7 @@ def main():
       workers.append(p)
 
     for p in workers:
-      p.wait()   
+      p.wait()
 
 
 if __name__ == "__main__":
